@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>MBTI별 좋아하는 컬러</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <div class="bg">
+        <div class="blob b1"></div>
+        <div class="blob b2"></div>
+        <div class="noise"></div>
+    </div>
+
+    <main class="app">
+        <!-- LEFT -->
+        <aside class="panel">
+            <div class="panel__card">
+                <div class="panel__title">MBTI별<br><span>좋아하는 컬러</span></div>
+
+                <div class="panel__filter">
+                    <div class="panel__label">필터</div>
+                    <div class="filterRow">
+                        <select id="mbtiSelect" class="select" aria-label="MBTI 선택">
+                            <option value="">전체 보기</option>
+                        </select>
+
+                        <button id="clearFilterBtn" class="ghostBtn" type="button" title="필터 해제">
+                            초기화
+                        </button>
+                    </div>
+
+                    <div class="chipArea" id="chipArea"></div>
+
+                    <div class="hint">
+                        목록에서 MBTI를 클릭하면 필터가 적용됩니다.
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel__mini">
+                <div class="miniCard">
+                    <div class="miniTitle">요약</div>
+                    <div class="miniGrid">
+                        <div class="miniItem">
+                            <div class="miniLabel">총 등록</div>
+                            <div class="miniValue" id="statTotal">0</div>
+                        </div>
+                        <div class="miniItem">
+                            <div class="miniLabel">현재 필터</div>
+                            <div class="miniValue" id="statFilter">전체</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- RIGHT -->
+        <section class="content">
+            <header class="topbar">
+                <label for="modalToggle" class="addBtn">
+                    <span class="addIcon">＋</span>
+                    새 컬러 등록하기
+                    <span class="shine"></span>
+                </label>
+                <div class="topbar__meta">
+                    <div class="kbd"><span>Tip</span> 행에 마우스를 올려보세요</div>
+                </div>
+            </header>
+
+            <div class="listWrap">
+                <div class="listHead">
+                    <div class="col id">번호</div>
+                    <div class="col mbti">MBTI</div>
+                    <div class="col name">이름</div>
+                    <div class="col color">컬러</div>
+                    <div class="col del">삭제</div>
+                </div>
+
+
+                <div class="list" id="list"></div>
+            </div>
+        </section>
+    </main>
+
+
+
+    <!-- MODAL -->
+    <input id="modalToggle" class="modalToggle" type="checkbox" />
+
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <label for="modalToggle" class="modal__backdrop" aria-label="닫기"></label>
+
+        <div class="modal__card">
+            <div class="modal__head">
+                <h2 id="modalTitle">새 컬러 등록하기</h2>
+                <label for="modalToggle" class="xBtn" title="닫기" aria-label="닫기">×</label>
+            </div>
+
+            <form id="form" class="form" autocomplete="off">
+                <!-- 이름 -->
+                <div class="formGroup">
+                    <div class="formLabel">이름</div>
+                    <input id="name" class="textInput" type="text" placeholder="예: 재훈" maxlength="20" required />
+                    <div class="subHint">표시용 이름입니다. (개인정보는 입력하지 않는 것을 권장합니다)</div>
+                </div>
+
+                <!-- MBTI -->
+                <div class="formGroup">
+                    <div class="formLabel">MBTI</div>
+
+                    <div class="mbtiGrid">
+                        <div class="seg">
+                            <input type="radio" name="EI" id="E" value="E" checked />
+                            <label for="E"><b>E</b><span>외향형</span></label>
+
+                            <input type="radio" name="EI" id="I" value="I" />
+                            <label for="I"><b>I</b><span>내향형</span></label>
+                        </div>
+
+                        <div class="seg">
+                            <input type="radio" name="SN" id="S" value="S" checked />
+                            <label for="S"><b>S</b><span>감각형</span></label>
+
+                            <input type="radio" name="SN" id="N" value="N" />
+                            <label for="N"><b>N</b><span>직관형</span></label>
+                        </div>
+
+                        <div class="seg">
+                            <input type="radio" name="TF" id="T" value="T" checked />
+                            <label for="T"><b>T</b><span>사고형</span></label>
+
+                            <input type="radio" name="TF" id="F" value="F" />
+                            <label for="F"><b>F</b><span>감정형</span></label>
+                        </div>
+
+                        <div class="seg">
+                            <input type="radio" name="JP" id="J" value="J" checked />
+                            <label for="J"><b>J</b><span>판단형</span></label>
+
+                            <input type="radio" name="JP" id="P" value="P" />
+                            <label for="P"><b>P</b><span>인식형</span></label>
+                        </div>
+                    </div>
+
+                    <div class="mbtiPreview">
+                        선택된 MBTI:
+                        <span class="pill" id="mbtiPreview">ESTJ</span>
+                    </div>
+                </div>
+
+                <!-- 컬러 -->
+                <div class="formGroup">
+                    <div class="formRow">
+                        <div class="formLabel">컬러</div>
+                        <button type="button" class="ghostBtn" id="randomBtn" title="랜덤 추천">↻ 랜덤</button>
+                    </div>
+
+                    <div class="colorField">
+                        <input id="hex" class="hexInput" type="text" value="#9441FF" maxlength="7" />
+                        <input id="picker" class="picker" type="color" value="#9441FF" aria-label="컬러 선택" />
+                        <div class="swatch" id="swatch" aria-hidden="true"></div>
+                    </div>
+
+                    <div class="subHint">
+                        HEX는 <code>#RRGGBB</code> 형태입니다. (예: <code>#41C6FF</code>)
+                    </div>
+                </div>
+
+                <button class="submitBtn" type="submit">
+                    컬러 등록
+                    <span class="btnGlow"></span>
+                </button>
+            </form>
+        </div>
+    </div>
+    <script>
+        window.__SUPABASE_URL__ = "https://gihmqoijkgblxwktsvvs.supabase.co";
+        window.__SUPABASE_KEY__ = "sb_publishable_...";
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="app.js"></script>
+
+
+</body>
+
+</html>
