@@ -1,6 +1,8 @@
-// ===== Supabase Init =====
-const SUPABASE_URL = window.__SUPABASE_URL__;
-const SUPABASE_KEY = window.__SUPABASE_KEY__;
+// ===== Supabase Init (임시 고정 테스트용) =====
+const SUPABASE_URL = "https://gihmqoijkgblxwktsvvs.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdpaG1xb2lqa2dibHh3a3RzdnZzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzOTkyNDksImV4cCI6MjA4Njk3NTI0OX0._XToYf2aFWRqq1t6yZ8TTY4KLJAQxg4iGvp4ReX_rEs";
+
+console.log("KEY head/len", SUPABASE_KEY.slice(0,10), SUPABASE_KEY.length);
 
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
